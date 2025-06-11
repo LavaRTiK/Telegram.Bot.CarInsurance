@@ -1,0 +1,6 @@
+@Telegram.Bot.CarInsurance_HostAddress = http://localhost:5108
+
+GET {{Telegram.Bot.CarInsurance_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
