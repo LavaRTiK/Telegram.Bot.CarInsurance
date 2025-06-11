@@ -42,7 +42,7 @@ app.UseHttpsRedirection();
 
 app.MapGet("/bot/setWebhook", async (TelegramBotClient bot) => { await bot.SetWebhook(webhookUrl); return $"Webhook set to {webhookUrl}"; });
 app.MapPost("/bot", OnUpdate);
-app.MapGet(("/test"), () => $"Server Works!");
+app.MapGet(("/test"), () => $"Server Works! 0.0.1");
 app.Run();
 async Task OnUpdate(TelegramBotClient bot,Update update,CommandRouterService commandRouterService)
 {
