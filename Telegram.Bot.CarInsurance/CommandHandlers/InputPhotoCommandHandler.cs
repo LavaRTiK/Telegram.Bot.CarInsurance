@@ -42,8 +42,9 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
                 var tgFile = await _bot.GetInfoAndDownloadFile(fileId, ms);
                 Document<InternationalIdV2> dataPassport = await _Mindee.ReadPassport(ms);
                 _userStateData.SetInternationalIdV2(message.Chat.Id, dataPassport);
+                var cutdata = dataPassport.Inference.Prediction;
                 //сделать только корогтко имя и тд
-                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data? \n\r {dataPassport.Inference.Prediction.ToString()}", replyMarkup: reply));
+                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data? \n\r FirstName:{cutdata.GivenNames} \n\r LastName:{cutdata.Surnames} \n\r", replyMarkup: reply));
             }
             else if (userState == UserState.InputPhoto)
             {
@@ -56,7 +57,8 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
                 Document<GeneratedV1> dataTex = await _Mindee.ReadTexPassport(ms);
                 _userStateData.SetUserTexPassport(message.Chat.Id, dataTex);
                 //сделать только корогтко имя и тд
-                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data? \n\r  Brand:{dataTex.Inference.Prediction.Fields.FirstOrDefault(x => x.Key == "Brand").Value} Model:{dataTex.Inference.Prediction.Fields.FirstOrDefault(x=>x.Key =="Model").Value}", replyMarkup: reply));
+                dataTex.Inference.Prediction.ToString();
+                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data? \n\r  Brand:{dataTex.Inference.Prediction.Fields.FirstOrDefault(x => x.Key == "brand").Value} Model:{dataTex.Inference.Prediction.Fields.FirstOrDefault(x=>x.Key == "model").Value}", replyMarkup: reply));
             }
             return null;
         }

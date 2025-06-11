@@ -52,8 +52,8 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
             var dataTex = _userStateData.GetUserTexPassport(message.Chat.Id).Inference.Prediction;
             //var imgUri = await openAIService.GenerateInsurense(dataIndiv.Prediction.ToString());
             //await _bot.SendPhoto(message.Chat.Id, InputFile.FromStream(imgUri.ImageBytes.ToStream()), caption: "You Insurance policy");
-            await _bot.SendMessage(message.Chat.Id, $"\r\nInsurance issued on {dataIndi.GivenNames} {dataIndi.Surnames} of Brand:{dataTex.Fields.FirstOrDefault(n=> n.Key == "Brand").Value} Model:{dataTex.Fields.FirstOrDefault(n => n.Key == "Model").Value}");
-            var reply = _telegramKeyboard.Main();
+            await _bot.SendMessage(message.Chat.Id, $"\r\nInsurance issued on {dataIndi.GivenNames} {dataIndi.Surnames} of Brand:{dataTex.Fields.FirstOrDefault(n=> n.Key == "brand").Value} Model:{dataTex.Fields.FirstOrDefault(n => n.Key == "model").Value}");
+            var reply = _telegramKeyboard.Main(); 
             _userStateService.SetState(message.Chat.Id,UserState.Main);
             return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id,"Go to Main",replyMarkup:reply));
         }
