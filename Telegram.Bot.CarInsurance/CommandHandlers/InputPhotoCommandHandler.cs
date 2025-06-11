@@ -44,7 +44,7 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
                 _userStateData.SetInternationalIdV2(message.Chat.Id, dataPassport);
                 var cutdata = dataPassport.Inference.Prediction;
                 //сделать только корогтко имя и тд
-                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data? \n\r FirstName:{cutdata.GivenNames} \n\r LastName:{cutdata.Surnames} \n\r", replyMarkup: reply));
+                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data? \n\r FirstName:{cutdata.GivenNames.ToString()} \n\r LastName:{cutdata.Surnames.ToString()} \n\r", replyMarkup: reply));
             }
             else if (userState == UserState.InputPhoto)
             {
