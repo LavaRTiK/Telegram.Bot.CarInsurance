@@ -49,6 +49,10 @@ namespace Telegram.Bot.CarInsurance.Services
             if (!_handlers.TryGetValue(command, out var handler))
             {
                 command = "AnswerToUser";
+                if (!_handlers.TryGetValue(command, out handler))
+                {
+                    return new Message();
+                }
             }
             if (_allowedState.TryGetValue(command, out var allowedState) && !allowedState.Contains(currentState))
             {
