@@ -10,12 +10,7 @@ namespace Telegram.Bot.CarInsurance.Abstractions
         ///<returns>Return object <see cref="ReplyKeyboardMarkup"/></returns>
         public ReplyKeyboardMarkup Main();
         ///<summary>
-        ///Generate Keyboard InsertState
-        ///</summary>
-        ///<returns>Return object <see cref="ReplyKeyboardMarkup"/></returns>
-        public ReplyKeyboardMarkup InsertState();
-        ///<summary>
-        ///Generate Keyboard InsertState
+        ///Generate Keyboard YesNoButton
         ///</summary>
         ///<returns>Return object <see cref="ReplyKeyboardMarkup"/></returns>
         public ReplyKeyboardMarkup YesNoButton();

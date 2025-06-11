@@ -9,13 +9,7 @@ namespace Telegram.Bot.CarInsurance.TelegramComponent
         public ReplyKeyboardMarkup Main()
         {
             var replayMarkup = new ReplyKeyboardMarkup(true);
-            replayMarkup.AddButton("Purchase car insurance");
-            return replayMarkup;
-        }
-        public ReplyKeyboardMarkup InsertState()
-        {
-            var replayMarkup = new ReplyKeyboardMarkup(true);
-            replayMarkup.AddButton("Back");
+            //replayMarkup.AddButton("Help");
             return replayMarkup;
         }
         public ReplyKeyboardMarkup YesNoButton()

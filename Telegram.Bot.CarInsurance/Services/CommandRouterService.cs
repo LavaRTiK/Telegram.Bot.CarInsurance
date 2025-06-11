@@ -38,7 +38,7 @@ namespace Telegram.Bot.CarInsurance.Services
                 botClient.SendMessage(chatId, "to Main", replyMarkup: _telegramKeyboard.Main());
                 return new Message();
             }
-            if (message.Photo != null && currentState == UserState.PurchaseInsurance)
+            if (message.Photo != null && (currentState == UserState.Main || currentState == UserState.InputPhoto))
             {
                 command = "InputPhoto";
             }
@@ -48,7 +48,7 @@ namespace Telegram.Bot.CarInsurance.Services
             }
             if (!_handlers.TryGetValue(command, out var handler))
             {
-                return new Message();
+                command = "AnswerToUser";
             }
                 if (_allowedState.TryGetValue(command, out var allowedState) && !allowedState.Contains(currentState))
             {

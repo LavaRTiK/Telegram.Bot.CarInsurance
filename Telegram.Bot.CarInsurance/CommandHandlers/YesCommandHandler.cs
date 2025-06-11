@@ -32,18 +32,27 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
             var currentState = _userStateService.GetUserState(message.Chat.Id);
             CommandResult commandResult = (currentState switch
             {
-                UserState.InputPhoto => await GiveAPropositon(message),
+                UserState.InputPhotoC => await StartReadTex(message),
+                UserState.InputPhoto2 => await GiveAPropositon(message),
                 UserState.GivePropositon => await GenerateDocumentInsurance(message),
                 _ => CommandResult.FromMessage(new Message())
             });
             return commandResult;
         }
 
+        private async Task<CommandResult> StartReadTex(Message message)
+        {
+            _userStateService.SetState(message.Chat.Id,UserState.InputPhoto);
+            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Upload a photo of your technical passport(UA format)"));
+        }
+
         private async Task<CommandResult> GenerateDocumentInsurance(Message message)
         {
-            string data = _userStateData.GetUserData(message.Chat.Id);
-            var imgUri = await openAIService.GenerateInsurense(data);
-            await _bot.SendPhoto(message.Chat.Id, InputFile.FromStream(imgUri.ImageBytes.ToStream()), caption: "You Insurance policy");
+            var dataIndi = _userStateData.GetUserInternationalIdV2(message.Chat.Id).Inference.Prediction;
+            var dataTex = _userStateData.GetUserTexPassport(message.Chat.Id).Inference.Prediction;
+            //var imgUri = await openAIService.GenerateInsurense(dataIndiv.Prediction.ToString());
+            //await _bot.SendPhoto(message.Chat.Id, InputFile.FromStream(imgUri.ImageBytes.ToStream()), caption: "You Insurance policy");
+            await _bot.SendMessage(message.Chat.Id, $"\r\nInsurance issued on {dataIndi.GivenNames} {dataIndi.Surnames} of Brand:{dataTex.Fields.FirstOrDefault(n=> n.Key == "Brand").Value} Model:{dataTex.Fields.FirstOrDefault(n => n.Key == "Model").Value}");
             var reply = _telegramKeyboard.Main();
             _userStateService.SetState(message.Chat.Id,UserState.Main);
             return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id,"Go to Main",replyMarkup:reply));

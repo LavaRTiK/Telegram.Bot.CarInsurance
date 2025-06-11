@@ -29,11 +29,18 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
             CommandResult commandResult = (current switch
             {
                 Enums.UserState.InputPhoto => await RepeatInput(message),
+                UserState.InputPhoto2 => await RepeatInput2(message),
                 Enums.UserState.GivePropositon => await InteractiveDialoge(message),
                 UserState.LastPropositon => await ToMain(message),
                 _ => CommandResult.FromMessage(new Message())
             });
             return commandResult;
+        }
+
+        private async Task<CommandResult> RepeatInput2(Message message)
+        {
+            _userStateService.SetState(message.Chat.Id, UserState.InputPhoto);
+            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Upload a photo of your texPasport"));
         }
 
         private async Task<CommandResult> ToMain(Message message)
@@ -52,8 +59,8 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
 
         private async Task<CommandResult> RepeatInput(Message message)
         {
-            _userStateService.SetState(message.Chat.Id, UserState.PurchaseInsurance);
-            return CommandResult.FromNextCommand("Purchase car insurance");
+            _userStateService.SetState(message.Chat.Id, UserState.Main);
+            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Upload a photo of your passport"));
         }
     }
 }

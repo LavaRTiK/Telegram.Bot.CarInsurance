@@ -6,6 +6,8 @@
         Main,
         PurchaseInsurance,
         InputPhoto,
+        InputPhotoC,
+        InputPhoto2,
         GivePropositon,
         LastPropositon,
     }
