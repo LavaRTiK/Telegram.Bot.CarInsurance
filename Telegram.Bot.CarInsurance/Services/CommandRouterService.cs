@@ -50,7 +50,7 @@ namespace Telegram.Bot.CarInsurance.Services
             {
                 command = "AnswerToUser";
             }
-                if (_allowedState.TryGetValue(command, out var allowedState) && !allowedState.Contains(currentState))
+            if (_allowedState.TryGetValue(command, out var allowedState) && !allowedState.Contains(currentState))
             {
                 throw new Exception("Denied acsses:" + command + "  currentUserState:" + currentState);
             }

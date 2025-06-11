@@ -10,6 +10,7 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers.ExtensionMethods
             services.AddScoped<ICommandHandler, NoCommandHandler>();
             services.AddScoped<ICommandHandler, StartCommandHandler>();
             services.AddScoped<ICommandHandler, YesCommandHandler>();
+            services.AddScoped<ICommandHandler,AnswerToUserCommandHandler>();
         }
     }
 }
