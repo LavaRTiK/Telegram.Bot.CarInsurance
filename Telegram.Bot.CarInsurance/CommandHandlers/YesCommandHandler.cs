@@ -53,16 +53,16 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
             var dataTex = _userStateData.GetUserTexPassport(message.Chat.Id).Inference.Prediction;
             //var imgUri = await openAIService.GenerateInsurense(dataIndiv.Prediction.ToString());
             //await _bot.SendPhoto(message.Chat.Id, InputFile.FromStream(imgUri.ImageBytes.ToStream()), caption: "You Insurance policy");
-            await _bot.SendMessage(message.Chat.Id, $"🎉 Insurance successfully issued in the name  {dataIndi.GivenNames.FirstOrDefault().Value} {dataIndi.Surnames.FirstOrDefault().Value} \r\n by car of Brand:{dataTex.Fields.FirstOrDefault(n=> n.Key == "brand").Value.ToString().Replace(":value:","").Replace("\n","").Replace("\r","").Trim()} Model:{dataTex.Fields.FirstOrDefault(n => n.Key == "model").Value.ToString().Replace(":value:","").Replace("\n", "").Replace("\r", "").Trim()} \r\nThank you for choosing our service. Drive safely! 🛡"); 
+            await _bot.SendMessage(message.Chat.Id, $"🎉 Insurance successfully issued in the name {dataIndi.GivenNames.FirstOrDefault().Value} {dataIndi.Surnames.FirstOrDefault().Value} \r\nby car of Brand:{dataTex.Fields.FirstOrDefault(n=> n.Key == "brand").Value.ToString().Replace(":value:","").Replace("\n","").Replace("\r","").Trim()} Model:{dataTex.Fields.FirstOrDefault(n => n.Key == "model").Value.ToString().Replace(":value:","").Replace("\n", "").Replace("\r", "").Trim()} \r\nThank you for choosing our service. Drive safely! 🛡"); 
             _userStateService.SetState(message.Chat.Id,UserState.Main);
-            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Go to Main \r\n Upload a photo of your passport", replyMarkup: new ReplyKeyboardRemove()));
+            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Go to Main \r\nUpload a photo of your passport", replyMarkup: new ReplyKeyboardRemove()));
         }
 
         private async Task<CommandResult> GiveAPropositon(Message message)
         {
             _userStateService.SetState(message.Chat.Id, UserState.GivePropositon);
             var replay = _telegramKeyboard.YesNoButton();
-            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "\r\nThe fixed price of insurance is 100 US dollars. \n \r\n Do you agree with the price?",replyMarkup: replay));
+            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "\r\nThe fixed price of insurance is 100 US dollars.\r\nDo you agree with the price?",replyMarkup: replay));
         }
     }
 }

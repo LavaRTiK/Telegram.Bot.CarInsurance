@@ -24,7 +24,7 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
         {
             _userStateService.SetState(message.Chat.Id, UserState.Main);
             ReplyKeyboardMarkup replyKeyboardMarkup = _telegramKeyboard.Main();
-            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Hi, I'm a bot that will help with <b>Сar insurance.</b> \n\t\r Upload a photo of your passport ", Types.Enums.ParseMode.Html, replyMarkup: replyKeyboardMarkup));
+            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Hi, I'm a bot that will help with <b>Сar insurance.</b> \n\rUpload a photo of your passport ", Types.Enums.ParseMode.Html, replyMarkup: replyKeyboardMarkup));
         }
     }
 }
