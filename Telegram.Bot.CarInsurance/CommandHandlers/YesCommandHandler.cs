@@ -44,7 +44,7 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
         private async Task<CommandResult> StartReadTex(Message message)
         {
             _userStateService.SetState(message.Chat.Id,UserState.InputPhoto);
-            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Upload a photo of your technical passport(UA format)"));
+            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Upload a photo of your technical passport(UA format)",replyMarkup: new ReplyKeyboardRemove()));
         }
 
         private async Task<CommandResult> GenerateDocumentInsurance(Message message)
