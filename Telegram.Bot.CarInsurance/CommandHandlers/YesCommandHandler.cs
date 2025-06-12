@@ -53,7 +53,7 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
             var dataTex = _userStateData.GetUserTexPassport(message.Chat.Id).Inference.Prediction;
             //var imgUri = await openAIService.GenerateInsurense(dataIndiv.Prediction.ToString());
             //await _bot.SendPhoto(message.Chat.Id, InputFile.FromStream(imgUri.ImageBytes.ToStream()), caption: "You Insurance policy");
-            await _bot.SendMessage(message.Chat.Id, $"🎉 Insurance successfully issued in the name  {dataIndi.GivenNames.FirstOrDefault().Value} by car {dataIndi.Surnames.FirstOrDefault().Value} of Brand:{dataTex.Fields.FirstOrDefault(n=> n.Key == "brand").Value.ToString().Replace(":value:","")} Model:{dataTex.Fields.FirstOrDefault(n => n.Key == "model").Value.ToString().Replace(":value:","")} \r\nThank you for choosing our service. Drive safely! 🛡"); 
+            await _bot.SendMessage(message.Chat.Id, $"🎉 Insurance successfully issued in the name  {dataIndi.GivenNames.FirstOrDefault().Value} {dataIndi.Surnames.FirstOrDefault().Value} \r\n by car of Brand:{dataTex.Fields.FirstOrDefault(n=> n.Key == "brand").Value.ToString().Replace(":value:","").Replace("\n","").Replace("\r","").Trim()} Model:{dataTex.Fields.FirstOrDefault(n => n.Key == "model").Value.ToString().Replace(":value:","").Replace("\n", "").Replace("\r", "").Trim()} \r\nThank you for choosing our service. Drive safely! 🛡"); 
             _userStateService.SetState(message.Chat.Id,UserState.Main);
             return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Go to Main \r\n Upload a photo of your passport", replyMarkup: new ReplyKeyboardRemove()));
         }

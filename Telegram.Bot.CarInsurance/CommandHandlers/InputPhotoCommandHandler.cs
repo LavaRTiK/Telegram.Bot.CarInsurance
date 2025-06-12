@@ -44,7 +44,7 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
                 _userStateData.SetInternationalIdV2(message.Chat.Id, dataPassport);
                 var cutdata = dataPassport.Inference.Prediction;
                 //сделать только корогтко имя и тд
-                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data? \r\n FirstName:{cutdata.GivenNames.FirstOrDefault().Value} \n\r LastName:{cutdata.Surnames.FirstOrDefault().Value} \n\r", replyMarkup: reply));
+                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data?(yes/no) \r\n FirstName:{cutdata.GivenNames.FirstOrDefault().Value} \n\r LastName:{cutdata.Surnames.FirstOrDefault().Value} \n\r", replyMarkup: reply));
             }
             else if (userState == UserState.InputPhoto)
             {
@@ -58,7 +58,7 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
                 _userStateData.SetUserTexPassport(message.Chat.Id, dataTex);
                 //сделать только корогтко имя и тд
                 dataTex.Inference.Prediction.ToString();
-                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data? \r\n  Brand:{dataTex.Inference.Prediction.Fields.FirstOrDefault(n => n.Key == "brand").Value.ToString().Replace(":value:","").Replace("\n"," ").Replace("\r"," ")} Model:{dataTex.Inference.Prediction.Fields.FirstOrDefault(x=>x.Key == "model").Value.ToString().Replace(":value:","")}", replyMarkup: reply));
+                return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, $"Correct Data?(yes/no) \r\n  Brand:{dataTex.Inference.Prediction.Fields.FirstOrDefault(n => n.Key == "brand").Value.ToString().Replace(":value:","").Replace("\n"," ").Replace("\r"," ").Trim()}  \r\nModel:{dataTex.Inference.Prediction.Fields.FirstOrDefault(x=>x.Key == "model").Value.ToString().Replace(":value:","").Replace("\n", " ").Replace("\r", " ").Trim()}", replyMarkup: reply));
             }
             return null;
         }

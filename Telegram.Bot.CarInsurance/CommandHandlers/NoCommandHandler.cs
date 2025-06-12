@@ -54,7 +54,7 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
         {
             _userStateService.SetState(message.Chat.Id, UserState.LastPropositon);
             var reply = _telegramKeyboard.YesNoButton();
-            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "We sincerely apologize — unfortunately, $100 USD is the only available price at this time \n\r\t \r\nDo you want to buy?",replyMarkup:reply));
+            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "We sincerely apologize — unfortunately, $100 USD is the only available price at this time \n\r\t \r\nDo you want to buy?(yes/no)", replyMarkup:reply));
         }
 
         private async Task<CommandResult> RepeatInput(Message message)
