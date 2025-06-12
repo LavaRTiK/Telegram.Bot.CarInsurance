@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using Mindee.Product.Passport;
+using SkiaSharp;
 using System;
 using Telegram.Bot.CarInsurance.Abstractions;
 using Telegram.Bot.CarInsurance.Abstractions.Interfaces;
@@ -35,7 +36,7 @@ namespace Telegram.Bot.CarInsurance.Services
             if(currentState == UserState.None && command != "/start")
             {
                 _userState.SetState(chatId,UserState.Main);
-                botClient.SendMessage(chatId, "to Main", replyMarkup: _telegramKeyboard.Main());
+                botClient.SendMessage(chatId, "to Main \r\n Upload a photo of your passport", replyMarkup: _telegramKeyboard.Main());
                 return new Message();
             }
             if (message.Photo != null && (currentState == UserState.Main || currentState == UserState.InputPhoto))
