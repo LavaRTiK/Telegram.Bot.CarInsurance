@@ -5,6 +5,7 @@ using Telegram.Bot.CarInsurance.Enums;
 using Telegram.Bot.CarInsurance.Object;
 using Telegram.Bot.CarInsurance.Services;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Telegram.Bot.CarInsurance.CommandHandlers
 {
@@ -52,10 +53,9 @@ namespace Telegram.Bot.CarInsurance.CommandHandlers
             var dataTex = _userStateData.GetUserTexPassport(message.Chat.Id).Inference.Prediction;
             //var imgUri = await openAIService.GenerateInsurense(dataIndiv.Prediction.ToString());
             //await _bot.SendPhoto(message.Chat.Id, InputFile.FromStream(imgUri.ImageBytes.ToStream()), caption: "You Insurance policy");
-            await _bot.SendMessage(message.Chat.Id, $"\r\nInsurance issued on {dataIndi.GivenNames.FirstOrDefault().Value} {dataIndi.Surnames.FirstOrDefault().Value} of Brand:{dataTex.Fields.FirstOrDefault(n=> n.Key == "brand").Value.ToString().Replace(":value:","")} Model:{dataTex.Fields.FirstOrDefault(n => n.Key == "model").Value.ToString().Replace(":value:","")}");
-            var reply = _telegramKeyboard.Main(); 
+            await _bot.SendMessage(message.Chat.Id, $"Insurance issued on {dataIndi.GivenNames.FirstOrDefault().Value} {dataIndi.Surnames.FirstOrDefault().Value} of Brand:{dataTex.Fields.FirstOrDefault(n=> n.Key == "brand").Value.ToString().Replace(":value:","")} Model:{dataTex.Fields.FirstOrDefault(n => n.Key == "model").Value.ToString().Replace(":value:","")}"); 
             _userStateService.SetState(message.Chat.Id,UserState.Main);
-            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id,"Go to Main",replyMarkup:reply));
+            return CommandResult.FromMessage(await _bot.SendMessage(message.Chat.Id, "Go to Main \r\n Upload a photo of your passport", replyMarkup: new ReplyKeyboardRemove()));
         }
 
         private async Task<CommandResult> GiveAPropositon(Message message)
